@@ -42,12 +42,21 @@ namespace ASP.NET_Truckers
         protected global::System.Web.UI.HtmlControls.HtmlInputText passwordField;
 
         /// <summary>
+        /// button0 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl button0;
+
+        /// <summary>
         /// button1 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button button1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl button1;
     }
 }

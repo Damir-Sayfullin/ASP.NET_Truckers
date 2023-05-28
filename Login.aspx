@@ -9,7 +9,10 @@
 	</div>
 	<input id="loginField" runat="server" type="text" class="auto-style5" style="width: 400px"/>
 	<h5 class="whitefont">Пароль</h5>
-	<input id="passwordField" runat="server" type="text" class="auto-style7" style="width: 400px"/><br /><br />
-	<asp:Button runat="server" OnClick="Authorize" Text="Авторизоваться" Width="400px"/><br /><br />
-	<asp:Button id="button1" runat="server" OnClick="button1_Click" Text="Открыть панель управления" Width="400px"/>
+	<input id="passwordField" runat="server" type="text" class="auto-style7" style="width: 400px"/>
+	<div runat="server" id="button0"><br /><asp:Button runat="server" OnClick="Authorize" Text="Авторизоваться" Width="400px"/></div>
+	<div runat="server" id="button1">
+		<br /><asp:Button runat="server" OnClick="button2_Click" Text="Сменить пользователя" Width="400px"/>
+		<br /><br /><asp:Button runat="server" OnClick="button1_Click" Text="Открыть панель управления" Width="400px"/>
+	</div>
 </asp:Content>

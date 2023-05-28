@@ -23,6 +23,7 @@ namespace ASP.NET_Truckers
             else
             {
                 bool visible = (bool)Session["visibilitydb"];
+                button0.Visible = !visible;
                 button1.Visible = visible;
             }
             if (Session["responseLabel"] != null)
@@ -30,10 +31,10 @@ namespace ASP.NET_Truckers
                 responseLabel.InnerHtml = (string)Session["responseLabel"];
 
                 if (Session["userName"] != null)
-                {
+                {/*
                     userID = (int)Session["userID"];
                     userPost = (string)Session["userPost"];
-                    userName = (string)Session["userName"];
+                    userName = (string)Session["userName"];*/
                     loginField.Disabled = true;
                     passwordField.Disabled = true;
                 }
@@ -82,7 +83,7 @@ namespace ASP.NET_Truckers
                 Session["userPost"] = (string)dataRow["Post"];
                 Session["userName"] = (string)dataRow["Username"];
 
-                Session["responseLabel"] = "Здравствуйте, " + dataRow["Username"] + "! Вы авторизованы, как " + (string)dataRow["Post"];
+                Session["responseLabel"] = "Вы авторизованы как " + ((string)dataRow["Post"]).ToLower() + " " + (string)dataRow["Username"];
 
                 Session["visibilitydb"] = true;
             }
@@ -94,7 +95,17 @@ namespace ASP.NET_Truckers
             if (Session["userPost"].ToString() == "Логист")
                 Response.Redirect("~/Logist.aspx");
             else if (Session["userPost"].ToString() == "Водитель")
-                Response.Redirect("~/Logist.aspx");
+                Response.Redirect("~/Logist.aspx"); // todo: заменить на driver
+        }
+
+        protected void button2_Click(object sender, EventArgs e)
+        {
+            Session["responseLabel"] = null;
+            Session["visibilitydb"] = null;
+            Session["userID"] = null;
+            Session["userPost"] = null;
+            Session["nauserName"] = null;
+            Response.Redirect("~/Login.aspx");
         }
     }
 }
