@@ -1,0 +1,16 @@
+﻿.whitefont {
+    font-family: Montserrat;
+    color: white;
+}
+
+    .whitefont a {
+        color: #aaaaaa;
+    }
+
+    .whitefont a:visited {
+        color: #aaaaaa;
+    }
+
+    .whitefont a:hover {
+        color: #aaaafa;
+    }

@@ -11,7 +11,7 @@ namespace ASP.NET_Truckers
 {
 
 
-    public partial class _Default
+    public partial class Login
     {
     }
 }
