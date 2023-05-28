@@ -11,9 +11,6 @@ namespace ASP.NET_Truckers
 {
     public partial class Login : System.Web.UI.Page
     {
-        private string userPost = "";
-        private int userID = 0;
-        private string userName = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["visibilitydb"] == null)
@@ -31,10 +28,7 @@ namespace ASP.NET_Truckers
                 responseLabel.InnerHtml = (string)Session["responseLabel"];
 
                 if (Session["userName"] != null)
-                {/*
-                    userID = (int)Session["userID"];
-                    userPost = (string)Session["userPost"];
-                    userName = (string)Session["userName"];*/
+                {
                     loginField.Disabled = true;
                     passwordField.Disabled = true;
                 }
@@ -58,7 +52,6 @@ namespace ASP.NET_Truckers
             string login = loginField.Value.ToString();
             string Password = passwordField.Value.ToString();
 
-            // Проверка на ввод логина и пароля //
             if (login == "" || Password == "")
             {
                 Session["responseLabel"] = "Введите логин и пароль!";
@@ -66,7 +59,6 @@ namespace ASP.NET_Truckers
                 return;
             }
 
-            // Запрос авторизации //
             DataTable response = SqlResponses.GetSqlFromDB("SELECT * FROM Users WHERE Login='" + login + "' AND Password='" + Password + "'");
 
             if (response.Rows.Count == 0)
@@ -76,7 +68,6 @@ namespace ASP.NET_Truckers
                 return;
             }
 
-            // Запоминание ID, логина и должности //
             foreach (DataRow dataRow in response.Rows)
             {
                 Session["userID"] = (int)dataRow["ID"];

@@ -39,10 +39,7 @@ namespace ASP.NET_Truckers
         DataSet dst;
         OleDbConnection myCnt;
         OleDbDataAdapter dbAdpt1;
-        //OleDbDataAdapter dbAdpt2;
 
-        private int user = 0;
-        private string name = "";
         static string connectionString = @"Provider=Microsoft.ACE.OLEDB.16.0;Data Source = C:/My Files/Универ/3 курс/Технологии программирования/ASP.NET_Truckers/data/TruckersDB.mdb";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -53,11 +50,8 @@ namespace ASP.NET_Truckers
             myCnt.ConnectionString = connectionString;
 
             string slct1 = "SELECT * From Cargo";
-            //string slct2 = "SELECT * From Users";
             dbAdpt1 = new OleDbDataAdapter(slct1, myCnt);
-            //dbAdpt2 = new OleDbDataAdapter(slct2, myCnt);
             dbAdpt1.Fill(dst, "Cargo");
-            //dbAdpt2.Fill(dst, "Users");
 
             GridView1.DataSource = dst.Tables["Cargo"];
             Page.DataBind();
@@ -72,52 +66,19 @@ namespace ASP.NET_Truckers
                 GridView1.Visible = visible;
             }
 
-            if (Session["visibility"] == null)
-            {
-                button1.Visible = false;
-            }
-            else
-            {
-                bool visible = (bool)Session["visibility"];
-                button1.Visible = visible;
-            }
-
-            /*if (Session["visible_notifations"] == null || admin == false)
-            {
-                isThereSomeNotifications.Visible = false;
-            }
-            else
-            {
-                bool visible = (bool)Session["visible_notifations"];
-                isThereSomeNotifications.Visible = visible;
-            }*/
-            /*
-            if (Session["picture_visible"] == null)
-            {
-                picture.Visible = false;
-            }
-            else
-            {
-                bool visible = (bool)Session["picture_visible"];
-                picture.Visible = visible;
-            }
-            */
-            /*if (Session["responseLabel"] != null)
+            if (Session["responseLabel"] != null)
             {
                 responseLabel.InnerHtml = (string)Session["responseLabel"];
 
-                if (Session["name"] != null)
+                if (Session["userName"] != null)
                 {
-                    user = (int)Session["user"];
-                    admin = (bool)Session["admin"];
-                    name = (string)Session["name"];
                     PrepareWindowAfterAuthorization();
                 }
             }
             else
             {
                 Response.Redirect("~/Login.aspx");
-            }*/
+            }
         }
 
         /// <summary>
@@ -377,29 +338,16 @@ namespace ASP.NET_Truckers
             Session["visible_notifations"] = false;
         }
 
-        protected void Logout(object sender, EventArgs e)
-        {
-            Session["responseLabel"] = null;
-            Session["visibilitydb"] = null;
-            Session["user"] = null;
-            Session["admin"] = null;
-            Session["name"] = null;
-            Session["orderResponse"] = null;
-            Session["GridVisibility"] = null;
-            DefaultSecondFrame(true);
-            Response.Redirect("~/Login.aspx");
-        }
-
         protected void gridshow_Click(object sender, EventArgs e)
         {
             Session["GridVisibility"] = true;
-            Server.TransferRequest("Database.aspx");
+            Server.TransferRequest("Logist.aspx");
         }
 
         protected void gridhide_Click(object sender, EventArgs e)
         {
             Session["GridVisibility"] = false;
-            Server.TransferRequest("Database.aspx");
+            Server.TransferRequest("Logist.aspx");
         }
 
         protected void buttonExit_Click(object sender, EventArgs e)

@@ -6,7 +6,7 @@
 		<hr />
 	    <h5 id="responseLabel" runat="server">Вы авторизованы как логист </h5>
 	</div>
-    <asp:Button id="buttonExit" OnClick="buttonExit_Click" runat="server" Text="« Выйти" Width="100px" />
+    <asp:Button id="buttonExit" OnClick="buttonExit_Click" runat="server" Text="« Назад" Width="100px" />
     <br/>
 
     <hr class="whitefont"/>

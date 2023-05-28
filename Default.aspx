@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="whitefont">
-        <h2><b>О проекте</b></h2>
+        <h2>О проекте</h2>
         <hr />
         <p>Этот проект создан с использованием технологии ASP.NET.</p>
         <p><b>Название:</b> Панель управления грузами</p>
