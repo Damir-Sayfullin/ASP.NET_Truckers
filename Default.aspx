@@ -4,6 +4,7 @@
 
     <div class="whitefont">
         <h2><b>О проекте</b></h2>
+        <hr />
         <p>Этот проект создан с использованием технологии ASP.NET.</p>
         <p><b>Название:</b> Панель управления грузами</p>
         <p><b>Цель:</b> выполнение курсовой работы по дисциплине "Технологии программирования".</p>
@@ -24,7 +25,6 @@
                 </ol>
         </ul>
         <hr />
-        <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Войти &raquo;</a>
-        <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Зарегистироваться &raquo;</a>
+        <a class="btn btn-default" href="/Login">Войти &raquo;</a>
     </div>
 </asp:Content>

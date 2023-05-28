@@ -1,17 +1,15 @@
 ﻿<%@ Page Title="Авторизация" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="ASP.NET_Truckers.Login" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: Title %>.</h2>
-    <h3>Your contact page.</h3>
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
-
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
+    <div class="whitefont">
+        <h2><%: Title %></h2>
+		<hr />
+		<p id="responseLabel" runat="server">Вы не авторизованы</p>
+		<h5>Логин</h5>
+	</div>
+	<input id="loginField" runat="server" type="text" class="auto-style5" style="width: 400px"/>
+	<h5 class="whitefont">Пароль</h5>
+	<input id="passwordField" runat="server" type="text" class="auto-style7" style="width: 400px"/><br /><br />
+	<asp:Button runat="server" OnClick="Authorize" Text="Авторизоваться" Width="400px"/><br /><br />
+	<asp:Button id="button1" runat="server" OnClick="button1_Click" Text="Открыть панель управления" Width="400px"/>
 </asp:Content>
