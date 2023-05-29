@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ASP.NET_Truckers
 {
@@ -26,7 +20,6 @@ namespace ASP.NET_Truckers
             if (Session["responseLabel"] != null)
             {
                 responseLabel.InnerHtml = (string)Session["responseLabel"];
-
                 if (Session["userName"] != null)
                 {
                     loginField.Disabled = true;
@@ -50,23 +43,19 @@ namespace ASP.NET_Truckers
             button1.Visible = false;
             string login = loginField.Value.ToString();
             string Password = passwordField.Value.ToString();
-
             if (login == "" || Password == "")
             {
                 Session["responseLabel"] = "Введите логин и пароль!";
                 Server.TransferRequest("Login.aspx");
                 return;
             }
-
             DataTable response = SqlResponses.GetSqlFromDB("SELECT * FROM Users WHERE Login='" + login + "' AND Password='" + Password + "'");
-
             if (response.Rows.Count == 0)
             {
                 Session["responseLabel"] = "Неверный логин или пароль!";
                 Server.TransferRequest("Login.aspx");
                 return;
             }
-
             foreach (DataRow dataRow in response.Rows)
             {
                 Session["visibilitydb"] = true;
