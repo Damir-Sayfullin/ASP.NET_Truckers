@@ -13,5 +13,10 @@ namespace ASP.NET_Truckers
         {
 
         }
+
+        protected void Button_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Login.aspx");
+        }
     }
 }

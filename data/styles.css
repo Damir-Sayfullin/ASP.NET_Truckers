@@ -14,3 +14,8 @@
     .whitefont a:hover {
         color: #aaaafa;
     }
+
+.blackfont {
+    font-family: Montserrat;
+    color: black;
+}

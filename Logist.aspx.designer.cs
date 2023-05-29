@@ -51,6 +51,15 @@ namespace ASP.NET_Truckers
         protected global::System.Web.UI.WebControls.Button gridhide;
 
         /// <summary>
+        /// GridViewShow элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl GridViewShow;
+
+        /// <summary>
         /// GridView1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace ASP.NET_Truckers
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect cargoID;
+
+        /// <summary>
+        /// buttonChoose элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonChoose;
 
         /// <summary>
         /// cargoDriverID элемент управления.
@@ -121,6 +139,42 @@ namespace ASP.NET_Truckers
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText cargoTo;
+
+        /// <summary>
+        /// buttonReload элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonReload;
+
+        /// <summary>
+        /// buttonSave элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonSave;
+
+        /// <summary>
+        /// buttonAdd элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonAdd;
+
+        /// <summary>
+        /// buttonDelete элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonDelete;
 
         /// <summary>
         /// productsForStock элемент управления.

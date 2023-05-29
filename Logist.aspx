@@ -5,35 +5,44 @@
         <h2>Панель управления логиста</h2>
 		<hr />
 	    <h5 id="responseLabel" runat="server">Вы авторизованы как логист </h5>
-	</div>
-    <asp:Button id="buttonExit" OnClick="buttonExit_Click" runat="server" Text="« Назад" Width="100px" />
-    <br/>
+    </div>
+	<asp:Button id="buttonExit" OnClick="buttonExit_Click" runat="server" Text="« Назад" class="blackfont" Width="100px" /><br/>
 
     <hr class="whitefont"/>
     
-    <div id="GridViewShow"> 
-        <asp:Button id="gridshow" runat="server" Text="Показать все грузы" Width="400px" OnClick="gridshow_Click"/><br />
-        <asp:Button id="gridhide" runat="server" Text="Скрыть все грузы" Width="400px" OnClick="gridhide_Click" /><br />
-        <asp:GridView ID="GridView1" runat="server"></asp:GridView><br />
+    <asp:Button id="gridshow" runat="server" Text="Показать все грузы" class="blackfont" Width="400px" OnClick="gridshow_Click"/><br />
+    <asp:Button id="gridhide" runat="server" Text="Скрыть все грузы" class="blackfont" Width="400px" OnClick="gridhide_Click" />
+    <div id="GridViewShow" runat="server" class="blackfont"> 
+        <br /><asp:GridView id="GridView1" class="whitefont" runat="server"></asp:GridView>
     </div>
 
     <hr class="whitefont"/>
 
     <div class="whitefont">
         <p>Выберие ID груза, чтобы получить больше информации</p>
-        <select id="cargoID" runat="server"></select><br /><br />
+        <select id="cargoID" class="blackfont" runat="server"></select>
+        <asp:Button id="buttonChoose" runat="server" Text="Выбрать" class="blackfont" Width="100px" /><br /><br />
         <p runat="server">ID водителя</p>
-        <input id="cargoDriverID" runat="server" type="text" style="width: 400px"/>
+        <input id="cargoDriverID" runat="server" type="text" class="blackfont" style="width: 400px"/>
         <p runat="server">Статус - </p>
-        <input id="cargoStatus" runat="server" type="text" style="width: 400px"/>
+        <input id="cargoStatus" runat="server" type="text" class="blackfont" style="width: 400px"/>
         <p runat="server">Наименование груза - </p>
-        <input id="cargoName" runat="server" type="text" style="width: 400px"/>
+        <input id="cargoName" runat="server" type="text" class="blackfont" style="width: 400px"/>
         <p runat="server">Масса груза в тоннах - </p>
-        <input id="cargoWeight" runat="server" type="text" style="width: 400px"/>
+        <input id="cargoWeight" runat="server" type="text" class="blackfont" style="width: 400px"/>
         <p runat="server">Пункт отправления - </p>
-        <input id="cargoFrom" runat="server" type="text" style="width: 400px"/>
+        <input id="cargoFrom" runat="server" type="text" class="blackfont" style="width: 400px"/>
         <p runat="server">Пункт назначения - </p>
-        <input id="cargoTo" runat="server" type="text" style="width: 400px"/>
+        <input id="cargoTo" runat="server" type="text" class="blackfont" style="width: 400px"/>
+    </div>
+
+    <hr class="whitefont" />
+
+    <div class="blackfont">
+        <asp:Button id="buttonReload" runat="server" Text="Обновить" Width="200px" OnClick="gridhide_Click" />
+        <asp:Button id="buttonSave" runat="server" Text="Сохранить" Width="200px" OnClick="gridhide_Click" /><br />
+        <asp:Button id="buttonAdd" runat="server" Text="Добавить" Width="200px" OnClick="gridhide_Click" />
+        <asp:Button id="buttonDelete" runat="server" Text="Удалить" Width="200px" OnClick="gridhide_Click" />
     </div>
     <!--
     <hr class="whitefont"/>

@@ -58,12 +58,12 @@ namespace ASP.NET_Truckers
 
             if (Session["GridVisibility"] == null)
             {
-                GridView1.Visible = false;
+                GridViewShow.Visible = false;
             }
             else
             {
                 bool visible = (bool)Session["GridVisibility"];
-                GridView1.Visible = visible;
+                GridViewShow.Visible = visible;
             }
 
             if (Session["responseLabel"] != null)
