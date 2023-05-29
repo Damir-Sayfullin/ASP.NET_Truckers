@@ -19,38 +19,37 @@
     <hr class="whitefont"/>
 
     <div class="whitefont">
-        <p>Выберие ID груза, чтобы получить больше информации</p>
-        <select id="cargoID" class="blackfont" runat="server"></select>
-        <asp:Button id="buttonChoose" runat="server" Text="Выбрать" class="blackfont" Width="100px" /><br /><br />
+        <p>Выберие ID груза, чтобы получить информацию о грузе</p>
+        <select id="cargoID" class="blackfont" runat="server" name="D2"></select>
+        <asp:Button id="buttonChoose" runat="server" Text="Выбрать" class="blackfont" Width="100px" OnClick="buttonChoose_Click" /><br /><br />
         <p runat="server">ID водителя</p>
-        <input id="cargoDriverID" runat="server" type="text" class="blackfont" style="width: 400px"/>
-        <p runat="server">Статус - </p>
-        <input id="cargoStatus" runat="server" type="text" class="blackfont" style="width: 400px"/>
-        <p runat="server">Наименование груза - </p>
-        <input id="cargoName" runat="server" type="text" class="blackfont" style="width: 400px"/>
-        <p runat="server">Масса груза в тоннах - </p>
-        <input id="cargoWeight" runat="server" type="text" class="blackfont" style="width: 400px"/>
-        <p runat="server">Пункт отправления - </p>
-        <input id="cargoFrom" runat="server" type="text" class="blackfont" style="width: 400px"/>
-        <p runat="server">Пункт назначения - </p>
+        <input id="cargoDriverID" runat="server" type="text" class="blackfont" style="width: 400px"/><br /><br />
+        <p runat="server">Статус</p>
+        <input id="cargoStatus" runat="server" type="text" class="blackfont" style="width: 400px"/><br /><br />
+        <p runat="server">Наименование груза</p>
+        <input id="cargoName" runat="server" type="text" class="blackfont" style="width: 400px"/><br /><br />
+        <p runat="server">Масса груза в тоннах</p>
+        <input id="cargoWeight" runat="server" type="text" class="blackfont" style="width: 400px"/><br /><br />
+        <p runat="server">Пункт отправления</p>
+        <input id="cargoFrom" runat="server" type="text" class="blackfont" style="width: 400px"/><br /><br />
+        <p runat="server">Пункт назначения</p>
         <input id="cargoTo" runat="server" type="text" class="blackfont" style="width: 400px"/>
     </div>
 
     <hr class="whitefont" />
 
     <div class="blackfont">
-        <asp:Button id="buttonReload" runat="server" Text="Обновить" Width="200px" OnClick="gridhide_Click" />
-        <asp:Button id="buttonSave" runat="server" Text="Сохранить" Width="200px" OnClick="gridhide_Click" /><br />
-        <asp:Button id="buttonAdd" runat="server" Text="Добавить" Width="200px" OnClick="gridhide_Click" />
-        <asp:Button id="buttonDelete" runat="server" Text="Удалить" Width="200px" OnClick="gridhide_Click" />
+        <asp:Button id="buttonReload" runat="server" Text="Обновить" Width="100px" OnClick="gridhide_Click" />
+        <asp:Button id="buttonSave" runat="server" Text="Сохранить" Width="100px" OnClick="gridhide_Click" /><br />
+        <asp:Button id="buttonAdd" runat="server" Text="Добавить" Width="100px" OnClick="gridhide_Click" />
+        <asp:Button id="buttonDelete" runat="server" Text="Удалить" Width="100px" OnClick="gridhide_Click" />
     </div>
     <!--
     <hr class="whitefont"/>
     
     <div>
-        <br />
-        <asp:Button runat="server" OnClick="ProductsForCountSelectedIndexChanged" Text="Узнать количество" Width="461px" />
-      
+        <br /> -->
+      <!--
         <div class="auto-style24" >
             <p>Выберие товар для заказа</p>
             <select id="productsForStock" runat="server" class="auto-style5"></select>
