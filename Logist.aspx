@@ -20,7 +20,7 @@
 
     <div class="whitefont">
         <p>Выберие ID груза, чтобы получить информацию о грузе</p>
-        <select id="cargoID" class="blackfont" runat="server" name="D2"></select>
+        <select id="cargoID" class="blackfont" runat="server"></select>
         <asp:Button id="buttonChoose" runat="server" Text="Выбрать" class="blackfont" Width="100px" OnClick="buttonChoose_Click" /><br /><br />
         <p runat="server">ID водителя</p>
         <input id="cargoDriverID" runat="server" type="text" class="blackfont" style="width: 400px"/><br /><br />
@@ -44,48 +44,4 @@
         <asp:Button id="buttonAdd" runat="server" Text="Добавить" Width="100px" OnClick="gridhide_Click" />
         <asp:Button id="buttonDelete" runat="server" Text="Удалить" Width="100px" OnClick="gridhide_Click" />
     </div>
-    <!--
-    <hr class="whitefont"/>
-    
-    <div>
-        <br /> -->
-      <!--
-        <div class="auto-style24" >
-            <p>Выберие товар для заказа</p>
-            <select id="productsForStock" runat="server" class="auto-style5"></select>
-            <br />
-            <p>Количество</p>
-            <input id="productCount" runat="server" type="number" value="0" min="0" max="1000" step="10" class="auto-style26" /><br />
-            <p>Дата доставки</p>
-            <input id="dateTimePicker" runat="server" type="text" class="auto-style7" /><br />
-            <asp:Button runat="server" OnClick="NewStock" Text="Заказать" CssClass="auto-style4" Width="555px" />
-            <br />
-            <asp:Button ID="button1" runat="server" OnClick="SendNotification" Text="Уведомить магазин" CssClass="auto-style4" Width="558px" />
-            <br />
-            <p id="orderResponse" runat="server" />
-        </div>
-
-    </div>
-    <br/>
-	-->
-    <script>
-        function showMessage()
-        {
-            alert("Отправлено уведомление магазину!");
-            return false;
-        }
-        function notificationsDeleted() {
-            alert("Все уведомления удалены!");
-            return false;
-        }
-    </script>
-    <!--
-    <script type="text/javascript">
-        function reloadPage() {
-            window.opener.location.reload();
-            window.close();
-        }
-        setTimeout("reloadPage()", 1000); // This will wait for 1 second before refreshing the page
-    </script>
-    -->
 </asp:Content>

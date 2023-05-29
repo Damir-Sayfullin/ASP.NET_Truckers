@@ -36,7 +36,6 @@ namespace ASP.NET_Truckers
             else
             {
                 responseLabel.InnerHtml = "Вы не авторизованы";
-
                 Session["visibilitydb"] = null;
                 Session["userID"] = null;
                 Session["userPost"] = null;
@@ -70,13 +69,11 @@ namespace ASP.NET_Truckers
 
             foreach (DataRow dataRow in response.Rows)
             {
+                Session["visibilitydb"] = true;
                 Session["userID"] = (int)dataRow["ID"];
                 Session["userPost"] = (string)dataRow["Post"];
                 Session["userName"] = (string)dataRow["Username"];
-
                 Session["responseLabel"] = "Вы авторизованы как " + ((string)dataRow["Post"]).ToLower() + " " + (string)dataRow["Username"];
-
-                Session["visibilitydb"] = true;
             }
             Server.TransferRequest("Login.aspx");
         }
@@ -86,7 +83,7 @@ namespace ASP.NET_Truckers
             if (Session["userPost"].ToString() == "Логист")
                 Response.Redirect("~/Logist.aspx");
             else if (Session["userPost"].ToString() == "Водитель")
-                Response.Redirect("~/Logist.aspx"); // todo: заменить на driver
+                Response.Redirect("~/Logist.aspx");
         }
 
         protected void button2_Click(object sender, EventArgs e)
