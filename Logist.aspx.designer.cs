@@ -69,6 +69,15 @@ namespace ASP.NET_Truckers
         protected global::System.Web.UI.WebControls.GridView GridView1;
 
         /// <summary>
+        /// errorMessage элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorMessage;
+
+        /// <summary>
         /// cargoID элемент управления.
         /// </summary>
         /// <remarks>

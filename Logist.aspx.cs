@@ -37,7 +37,7 @@ namespace ASP.NET_Truckers
         OleDbDataAdapter dbAdpt1;
         static string connectionString = @"Provider=Microsoft.ACE.OLEDB.16.0;Data Source = C:/My Files/Универ/3 курс/Технологии программирования/ASP.NET_Truckers/data/TruckersDB.mdb";
         protected void Page_Load(object sender, EventArgs e)
-        {
+        { 
             dst = new DataSet();
             myCnt = new OleDbConnection();
             myCnt.ConnectionString = connectionString;
@@ -46,16 +46,9 @@ namespace ASP.NET_Truckers
             dbAdpt1.Fill(dst, "Cargo");
             GridView1.DataSource = dst.Tables["Cargo"];
             Page.DataBind();
-            if (Session["GridVisibility"] == null)
-            {
-                GridViewShow.Visible = false;
-            }
-            else
-            {
-                bool visible = (bool)Session["GridVisibility"];
-                GridViewShow.Visible = visible;
-            }
-            if (Session["responseLabel"] != null)
+
+            // проверка на авторизацию
+            if (Session["userPost"] != null && Session["userPost"].ToString() == "Логист")
             {
                 responseLabel.InnerHtml = (string)Session["responseLabel"];
                 if (!IsPostBack)
@@ -65,11 +58,32 @@ namespace ASP.NET_Truckers
             {
                 Response.Redirect("~/Login.aspx");
             }
+
+            // отображение таблицы
+            if (Session["GridVisibility"] == null)
+            {
+                GridViewShow.Visible = false;
+            }
+            else
+            {
+                bool visible = (bool)Session["GridVisibility"];
+                GridViewShow.Visible = visible;
+            }
+
+            // отображение сообщения об ошибке
+            if (Session["ErrorMessage"] == null)
+            {
+                errorMessage.Visible = false;
+            }
+            else
+            {
+                errorMessage.InnerText = Session["ErrorMessage"].ToString();
+                errorMessage.Visible = true;
+            }
         }
 
         public void CargoID_Reload()
         {
-            System.Diagnostics.Debug.WriteLine("Метод CargoID_Reload вызван");
             cargoID.Items.Clear();
             foreach (DataRow dataRow in dst.Tables["Cargo"].Rows)
             {
@@ -105,22 +119,28 @@ namespace ASP.NET_Truckers
 
         protected void buttonReload_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Login.aspx");
+            Server.TransferRequest("Logist.aspx");
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Login.aspx");
+            /*if (cargoID.Value != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
+            PasswordRecovery
+                    else
+
+            Server.TransferRequest("Logist.aspx");*/
         }
 
         protected void buttonAdd_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Login.aspx");
+            Session["ErrorMessage"] = "Ошибка";
+            Server.TransferRequest("Logist.aspx");
         }
 
         protected void buttonDelete_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Login.aspx");
+            Session["ErrorMessage"] = null;
+            Server.TransferRequest("Logist.aspx");
         }
 
         protected void gridshow_Click(object sender, EventArgs e)
