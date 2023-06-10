@@ -58,7 +58,8 @@ namespace ASP.NET_Truckers
             if (Session["responseLabel"] != null)
             {
                 responseLabel.InnerHtml = (string)Session["responseLabel"];
-                CargoID_Reload();
+                if (!IsPostBack)
+                    CargoID_Reload();
             }
             else
             {
@@ -68,13 +69,15 @@ namespace ASP.NET_Truckers
 
         public void CargoID_Reload()
         {
+            System.Diagnostics.Debug.WriteLine("Метод CargoID_Reload вызван");
             cargoID.Items.Clear();
             foreach (DataRow dataRow in dst.Tables["Cargo"].Rows)
             {
-                cargoID.Items.Add(new ListItem { Text = dataRow["Cargo"].ToString(), Value = dataRow["ID"].ToString()});
+                cargoID.Items.Add(new ListItem { Text = dataRow["ID"].ToString(), Value = dataRow["ID"].ToString() });
             }
             if (Session["cargoDriverID"] != null)
             {
+                cargoID.Value = Session["cargoID"].ToString();
                 cargoDriverID.Value = Session["cargoDriverID"].ToString();
                 cargoStatus.Value = Session["cargoStatus"].ToString();
                 cargoName.Value = Session["cargoName"].ToString();
@@ -86,10 +89,10 @@ namespace ASP.NET_Truckers
 
         public void buttonChoose_Click(object sender, EventArgs e)
         {
-            string currentID = cargoID.Items[cargoID.SelectedIndex].Value;
-            DataTable response = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + currentID); 
+            DataTable response = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + cargoID.Value.ToString());
             foreach (DataRow dataRow in response.Rows)
             {
+                Session["cargoID"] = cargoID.Value.ToString();
                 Session["cargoDriverID"] = dataRow["DriverID"].ToString();
                 Session["cargoStatus"] = dataRow["Status"].ToString();
                 Session["cargoName"] = dataRow["Cargo"].ToString();
@@ -99,7 +102,27 @@ namespace ASP.NET_Truckers
             }
             Server.TransferRequest("Logist.aspx");
         }
-       
+
+        protected void buttonReload_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Login.aspx");
+        }
+
+        protected void buttonSave_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Login.aspx");
+        }
+
+        protected void buttonAdd_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Login.aspx");
+        }
+
+        protected void buttonDelete_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Login.aspx");
+        }
+
         protected void gridshow_Click(object sender, EventArgs e)
         {
             Session["GridVisibility"] = true;

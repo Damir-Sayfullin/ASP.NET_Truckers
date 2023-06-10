@@ -39,9 +39,9 @@
     <hr class="whitefont" />
 
     <div class="blackfont">
-        <asp:Button id="buttonReload" runat="server" Text="Обновить" Width="100px" OnClick="gridhide_Click" />
-        <asp:Button id="buttonSave" runat="server" Text="Сохранить" Width="100px" OnClick="gridhide_Click" /><br />
-        <asp:Button id="buttonAdd" runat="server" Text="Добавить" Width="100px" OnClick="gridhide_Click" />
-        <asp:Button id="buttonDelete" runat="server" Text="Удалить" Width="100px" OnClick="gridhide_Click" />
+        <asp:Button id="buttonReload" runat="server" Text="Обновить" Width="100px" OnClick="buttonReload_Click" />
+        <asp:Button id="buttonSave" runat="server" Text="Сохранить" Width="100px" OnClick="buttonSave_Click" /><br />
+        <asp:Button id="buttonAdd" runat="server" Text="Добавить" Width="100px" OnClick="buttonAdd_Click" />
+        <asp:Button id="buttonDelete" runat="server" Text="Удалить" Width="100px" OnClick="buttonDelete_Click" />
     </div>
 </asp:Content>
