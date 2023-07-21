@@ -84,7 +84,7 @@ namespace ASP.NET_Truckers
 
         public void CargoID_Reload()
         {
-            System.Diagnostics.Debug.WriteLine("cargo reload");
+            //System.Diagnostics.Debug.WriteLine("cargo reload");
             cargoID.Items.Clear();
             foreach (DataRow dataRow in dst.Tables["Cargo"].Rows)
             {
@@ -129,12 +129,24 @@ namespace ASP.NET_Truckers
             if (cargoID.Value != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
             {
                 DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", cargoDriverID.Value.ToString()));
-                if (cargoDriverID.Value == "0" || response.Rows.Count == 0)
+                if (cargoDriverID.Value == "0" || response.Rows.Count == 0 || cargoDriverID.Value == (string)Session["cargoDriverID"])
                 {
                     SqlResponses.SqlFromDB(string.Format("UPDATE Cargo SET DriverID={1}, Status='{2}', Cargo='{3}', Weight={4}, [From]='{5}', [To]='{6}' WHERE ID={0}",
                         cargoID.Value.ToString(), cargoDriverID.Value.ToString(), cargoStatus.Value.ToString(),
                         cargoName.Value.ToString(), cargoWeight.Value.ToString(), cargoFrom.Value.ToString(), cargoTo.Value.ToString()));
                     Session["ErrorMessage"] = "УСПЕХ: Данные у груза с ID=" + cargoID.Value.ToString() + " обновлены";
+
+                    DataTable response2 = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + cargoID.Value.ToString());
+                    foreach (DataRow dataRow in response2.Rows)
+                    {
+                        Session["cargoID"] = cargoID.Value.ToString();
+                        Session["cargoDriverID"] = dataRow["DriverID"].ToString();
+                        Session["cargoStatus"] = dataRow["Status"].ToString();
+                        Session["cargoName"] = dataRow["Cargo"].ToString();
+                        Session["cargoWeight"] = dataRow["Weight"].ToString();
+                        Session["cargoFrom"] = dataRow["From"].ToString();
+                        Session["cargoTo"] = dataRow["To"].ToString();
+                    }
                 }
                 else
                     Session["ErrorMessage"] = "ОШИБКА: У водителя с ID=" + cargoDriverID.Value.ToString() + " уже есть груз!";
