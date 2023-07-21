@@ -161,13 +161,38 @@ namespace ASP.NET_Truckers
 
         protected void buttonAdd_Click(object sender, EventArgs e)
         {
-            //Session["ErrorMessage"] = "Ошибка";
-            Server.TransferRequest("Logist.aspx");
+            if (cargoID.Value != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
+            {
+                DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", cargoDriverID.Value.ToString()));
+                if (cargoDriverID.Value == "0" || response.Rows.Count == 0)
+                {
+
+                    SqlResponses.SqlFromDB(string.Format("INSERT INTO Cargo (DriverID, Status, Cargo, Weight, [From], [To]) VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}')", 
+                        cargoDriverID.Value, cargoStatus.Value, cargoName.Value, cargoWeight.Value, cargoFrom.Value, cargoTo.Value));
+                    Session["ErrorMessage"] = "УСПЕХ: Груз \"" + cargoName.Value.ToString() + "\" успешно добавлен";
+
+                    Session["cargoID"] = null;
+                    Session["cargoDriverID"] = null;
+                    Session["cargoStatus"] = null;
+                    Session["cargoName"] = null;
+                    Session["cargoWeight"] = null;
+                    Session["cargoFrom"] = null;
+                    Session["cargoTo"] = null;
+                }
+                else
+                    Session["ErrorMessage"] = "ОШИБКА: У водителя с ID=" + cargoDriverID.Value.ToString() + " уже есть груз!";
+                Server.TransferRequest("Logist.aspx");
+            }
+            else
+            {
+                Session["ErrorMessage"] = "ОШИБКА: Не все поля были заполнены!";
+                Server.TransferRequest("Logist.aspx");
+            }
         }
 
         protected void buttonDelete_Click(object sender, EventArgs e)
         {
-            //Session["ErrorMessage"] = null;
+            Session["ErrorMessage"] = "ОШИБКА: Функция находится в разработке!";
             Server.TransferRequest("Logist.aspx");
         }
 
