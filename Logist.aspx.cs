@@ -84,7 +84,6 @@ namespace ASP.NET_Truckers
 
         public void CargoID_Reload()
         {
-            //System.Diagnostics.Debug.WriteLine("cargo reload");
             cargoID.Items.Clear();
             foreach (DataRow dataRow in dst.Tables["Cargo"].Rows)
             {
@@ -92,7 +91,7 @@ namespace ASP.NET_Truckers
             }
             if (Session["cargoDriverID"] != null)
             {
-                cargoID.Value = Session["cargoID"].ToString();
+                cargoID.SelectedValue = Session["cargoID"].ToString();
                 cargoDriverID.Value = Session["cargoDriverID"].ToString();
                 cargoStatus.Value = Session["cargoStatus"].ToString();
                 cargoName.Value = Session["cargoName"].ToString();
@@ -102,12 +101,12 @@ namespace ASP.NET_Truckers
             }
         }
 
-        public void buttonChoose_Click(object sender, EventArgs e)
+        public void cargoID_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DataTable response = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + cargoID.Value.ToString());
+            DataTable response = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + cargoID.SelectedValue.ToString());
             foreach (DataRow dataRow in response.Rows)
             {
-                Session["cargoID"] = cargoID.Value.ToString();
+                Session["cargoID"] = cargoID.SelectedValue.ToString();
                 Session["cargoDriverID"] = dataRow["DriverID"].ToString();
                 Session["cargoStatus"] = dataRow["Status"].ToString();
                 Session["cargoName"] = dataRow["Cargo"].ToString();
@@ -126,20 +125,20 @@ namespace ASP.NET_Truckers
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
-            if (cargoID.Value != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
+            if (cargoID.SelectedValue != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
             {
                 DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", cargoDriverID.Value.ToString()));
                 if (cargoDriverID.Value == "0" || response.Rows.Count == 0 || cargoDriverID.Value == (string)Session["cargoDriverID"])
                 {
                     SqlResponses.SqlFromDB(string.Format("UPDATE Cargo SET DriverID={1}, Status='{2}', Cargo='{3}', Weight={4}, [From]='{5}', [To]='{6}' WHERE ID={0}",
-                        cargoID.Value.ToString(), cargoDriverID.Value.ToString(), cargoStatus.Value.ToString(),
+                        cargoID.SelectedValue.ToString(), cargoDriverID.Value.ToString(), cargoStatus.Value.ToString(),
                         cargoName.Value.ToString(), cargoWeight.Value.ToString(), cargoFrom.Value.ToString(), cargoTo.Value.ToString()));
-                    Session["ErrorMessage"] = "УСПЕХ: Данные у груза с ID=" + cargoID.Value.ToString() + " обновлены";
+                    Session["ErrorMessage"] = "УСПЕХ: Данные у груза с ID=" + cargoID.SelectedValue.ToString() + " обновлены";
 
-                    DataTable response2 = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + cargoID.Value.ToString());
+                    DataTable response2 = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + cargoID.SelectedValue.ToString());
                     foreach (DataRow dataRow in response2.Rows)
                     {
-                        Session["cargoID"] = cargoID.Value.ToString();
+                        Session["cargoID"] = cargoID.SelectedValue.ToString();
                         Session["cargoDriverID"] = dataRow["DriverID"].ToString();
                         Session["cargoStatus"] = dataRow["Status"].ToString();
                         Session["cargoName"] = dataRow["Cargo"].ToString();
@@ -161,7 +160,7 @@ namespace ASP.NET_Truckers
 
         protected void buttonAdd_Click(object sender, EventArgs e)
         {
-            if (cargoID.Value != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
+            if (cargoID.SelectedValue != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
             {
                 DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", cargoDriverID.Value.ToString()));
                 if (cargoDriverID.Value == "0" || response.Rows.Count == 0)
@@ -192,15 +191,15 @@ namespace ASP.NET_Truckers
 
         protected void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (cargoID.Value != null)
+            if (cargoID.SelectedValue != null)
             {
-                DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE ID = {0}", cargoID.Value.ToString()));
+                DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE ID = {0}", cargoID.SelectedValue.ToString()));
                 foreach (DataRow dataRow in response.Rows)
                 {
                     if (dataRow["DriverID"].ToString() == "0")
                     {
-                        SqlResponses.SqlFromDB(string.Format("DELETE FROM Cargo WHERE ID = {0}", cargoID.Value.ToString()));
-                        Session["ErrorMessage"] = "УСПЕХ: Груз с ID=" + cargoID.Value.ToString() + " успешно удален";
+                        SqlResponses.SqlFromDB(string.Format("DELETE FROM Cargo WHERE ID = {0}", cargoID.SelectedValue.ToString()));
+                        Session["ErrorMessage"] = "УСПЕХ: Груз с ID=" + cargoID.SelectedValue.ToString() + " успешно удален";
 
                         Session["cargoID"] = null;
                         Session["cargoDriverID"] = null;

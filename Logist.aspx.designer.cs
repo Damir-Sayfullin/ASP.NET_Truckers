@@ -84,16 +84,7 @@ namespace ASP.NET_Truckers
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect cargoID;
-
-        /// <summary>
-        /// buttonChoose элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonChoose;
+        protected global::System.Web.UI.WebControls.DropDownList cargoID;
 
         /// <summary>
         /// cargoDriverID элемент управления.

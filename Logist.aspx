@@ -21,8 +21,7 @@
     <div class="whitefont">
         <p id="errorMessage" runat="server" style="color: yellow"></p>
         <p>Выберие ID груза, чтобы получить информацию о грузе</p>
-        <select id="cargoID" class="blackfont" runat="server"></select>
-        <asp:Button id="buttonChoose" runat="server" Text="Выбрать" class="blackfont" Width="100px" OnClick="buttonChoose_Click" /><br /><br />
+        <asp:DropDownList id="cargoID" class="blackfont" runat="server" AutoPostBack="true" OnSelectedIndexChanged="cargoID_SelectedIndexChanged"/><br /><br />
         <p runat="server">ID водителя</p>
         <input id="cargoDriverID" runat="server" type="text" class="blackfont" style="width: 400px"/><br /><br />
         <p runat="server">Статус</p>
