@@ -72,16 +72,12 @@ namespace ASP.NET_Truckers
             if (Session["userPost"].ToString() == "Логист")
                 Response.Redirect("~/Logist.aspx");
             else if (Session["userPost"].ToString() == "Водитель")
-                Response.Redirect("~/Logist.aspx");
+                Response.Redirect("~/Driver.aspx");
         }
 
         protected void button2_Click(object sender, EventArgs e)
         {
-            Session["responseLabel"] = null;
-            Session["visibilitydb"] = null;
-            Session["userID"] = null;
-            Session["userPost"] = null;
-            Session["nauserName"] = null;
+            Session.Contents.RemoveAll();
             Response.Redirect("~/Login.aspx");
         }
     }

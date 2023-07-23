@@ -6,38 +6,14 @@ using System.Web.UI.WebControls;
 
 namespace ASP.NET_Truckers
 {
-    class SqlResponses
-    {
-        static string connectionString = @"Provider=Microsoft.ACE.OLEDB.16.0;Data Source = C:/My Files/Универ/3 курс/Технологии программирования/ASP.NET_Truckers/data/TruckersDB.mdb";
-        public static void SqlFromDB(string sql)
-        {
-            OleDbConnection connection = new OleDbConnection(connectionString);
-            connection.Open();
-            OleDbCommand cmd = new OleDbCommand(sql, connection);
-            cmd.ExecuteNonQuery();
-            connection.Close();
-        }
-
-        public static DataTable GetSqlFromDB(string sql)
-        {
-            OleDbConnection connection = new OleDbConnection(connectionString);
-            connection.Open();
-            DataTable dataTable = new DataTable();
-            OleDbDataAdapter adapter = new OleDbDataAdapter(sql, connection);
-            adapter.Fill(dataTable);
-            connection.Close();
-            return dataTable;
-        }
-    }
-
-    public partial class Logist : System.Web.UI.Page
+    public partial class Driver : System.Web.UI.Page
     {
         DataSet dst;
         OleDbConnection myCnt;
         OleDbDataAdapter dbAdpt1;
         static string connectionString = @"Provider=Microsoft.ACE.OLEDB.16.0;Data Source = C:/My Files/Универ/3 курс/Технологии программирования/ASP.NET_Truckers/data/TruckersDB.mdb";
         protected void Page_Load(object sender, EventArgs e)
-        { 
+        {
             dst = new DataSet();
             myCnt = new OleDbConnection();
             myCnt.ConnectionString = connectionString;
@@ -48,7 +24,7 @@ namespace ASP.NET_Truckers
             Page.DataBind();
 
             // проверка на авторизацию
-            if (Session["userPost"] != null && Session["userPost"].ToString() == "Логист")
+            if (Session["userPost"] != null && Session["userPost"].ToString() == "Водитель")
             {
                 responseLabel.InnerHtml = (string)Session["responseLabel"];
                 if (!IsPostBack)
@@ -125,16 +101,16 @@ namespace ASP.NET_Truckers
                 Session["cargoFrom"] = dataRow["From"].ToString();
                 Session["cargoTo"] = dataRow["To"].ToString();
             }
-            Server.TransferRequest("Logist.aspx");
+            Server.TransferRequest("Driver.aspx");
         }
 
-        protected void buttonReload_Click(object sender, EventArgs e)
+        protected void buttonCurrent_Click(object sender, EventArgs e)
         {
             Session["ErrorMessage"] = null;
-            Server.TransferRequest("Logist.aspx");
+            Server.TransferRequest("Driver.aspx");
         }
 
-        protected void buttonSave_Click(object sender, EventArgs e)
+        protected void buttonAccept_Click(object sender, EventArgs e)
         {
             if (cargoID.SelectedValue != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
             {
@@ -160,16 +136,16 @@ namespace ASP.NET_Truckers
                 }
                 else
                     Session["ErrorMessage"] = "ОШИБКА: У водителя с ID=" + cargoDriverID.Value.ToString() + " уже есть груз!";
-                Server.TransferRequest("Logist.aspx");
+                Server.TransferRequest("Driver.aspx");
             }
             else
             {
                 Session["ErrorMessage"] = "ОШИБКА: Не все поля были заполнены!";
-                Server.TransferRequest("Logist.aspx");
+                Server.TransferRequest("Driver.aspx");
             }
         }
 
-        protected void buttonAdd_Click(object sender, EventArgs e)
+        protected void buttonCancel_Click(object sender, EventArgs e)
         {
             if (cargoID.SelectedValue != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
             {
@@ -177,7 +153,7 @@ namespace ASP.NET_Truckers
                 if (cargoDriverID.Value == "0" || response.Rows.Count == 0)
                 {
 
-                    SqlResponses.SqlFromDB(string.Format("INSERT INTO Cargo (DriverID, Status, Cargo, Weight, [From], [To]) VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}')", 
+                    SqlResponses.SqlFromDB(string.Format("INSERT INTO Cargo (DriverID, Status, Cargo, Weight, [From], [To]) VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}')",
                         cargoDriverID.Value, cargoStatus.Value, cargoName.Value, cargoWeight.Value, cargoFrom.Value, cargoTo.Value));
                     Session["ErrorMessage"] = "УСПЕХ: Груз \"" + cargoName.Value.ToString() + "\" успешно добавлен";
 
@@ -191,16 +167,16 @@ namespace ASP.NET_Truckers
                 }
                 else
                     Session["ErrorMessage"] = "ОШИБКА: У водителя с ID=" + cargoDriverID.Value.ToString() + " уже есть груз!";
-                Server.TransferRequest("Logist.aspx");
+                Server.TransferRequest("Driver.aspx");
             }
             else
             {
                 Session["ErrorMessage"] = "ОШИБКА: Не все поля были заполнены!";
-                Server.TransferRequest("Logist.aspx");
+                Server.TransferRequest("Driver.aspx");
             }
         }
 
-        protected void buttonDelete_Click(object sender, EventArgs e)
+        protected void buttonDelivery_Click(object sender, EventArgs e)
         {
             if (cargoID.SelectedValue != null)
             {
@@ -222,28 +198,28 @@ namespace ASP.NET_Truckers
                     }
                     else
                     {
-                       Session["ErrorMessage"] = "ОШИБКА: Невозможно удалить груз, так как он занят водителем с ID=" + dataRow["DriverID"].ToString() + "!";
+                        Session["ErrorMessage"] = "ОШИБКА: Невозможно удалить груз, так как он занят водителем с ID=" + dataRow["DriverID"].ToString() + "!";
                     }
                 }
-                Server.TransferRequest("Logist.aspx");
+                Server.TransferRequest("Driver.aspx");
             }
             else
             {
                 Session["ErrorMessage"] = "ОШИБКА: Не выбран ID!";
-                Server.TransferRequest("Logist.aspx");
+                Server.TransferRequest("Driver.aspx");
             }
         }
 
         protected void gridshow_Click(object sender, EventArgs e)
         {
             Session["GridVisibility"] = true;
-            Server.TransferRequest("Logist.aspx");
+            Server.TransferRequest("Driver.aspx");
         }
 
         protected void gridhide_Click(object sender, EventArgs e)
         {
             Session["GridVisibility"] = false;
-            Server.TransferRequest("Logist.aspx");
+            Server.TransferRequest("Driver.aspx");
         }
 
         protected void buttonExit_Click(object sender, EventArgs e)
