@@ -192,8 +192,36 @@ namespace ASP.NET_Truckers
 
         protected void buttonDelete_Click(object sender, EventArgs e)
         {
-            Session["ErrorMessage"] = "ОШИБКА: Функция находится в разработке!";
-            Server.TransferRequest("Logist.aspx");
+            if (cargoID.Value != null)
+            {
+                DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE ID = {0}", cargoID.Value.ToString()));
+                foreach (DataRow dataRow in response.Rows)
+                {
+                    if (dataRow["DriverID"].ToString() == "0")
+                    {
+                        SqlResponses.SqlFromDB(string.Format("DELETE FROM Cargo WHERE ID = {0}", cargoID.Value.ToString()));
+                        Session["ErrorMessage"] = "УСПЕХ: Груз с ID=" + cargoID.Value.ToString() + " успешно удален";
+
+                        Session["cargoID"] = null;
+                        Session["cargoDriverID"] = null;
+                        Session["cargoStatus"] = null;
+                        Session["cargoName"] = null;
+                        Session["cargoWeight"] = null;
+                        Session["cargoFrom"] = null;
+                        Session["cargoTo"] = null;
+                    }
+                    else
+                    {
+                       Session["ErrorMessage"] = "ОШИБКА: Невозможно удалить груз, так как он занят водителем с ID=" + dataRow["DriverID"].ToString() + "!";
+                    }
+                }
+                Server.TransferRequest("Logist.aspx");
+            }
+            else
+            {
+                Session["ErrorMessage"] = "ОШИБКА: Не выбран ID!";
+                Server.TransferRequest("Logist.aspx");
+            }
         }
 
         protected void gridshow_Click(object sender, EventArgs e)

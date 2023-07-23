@@ -64,7 +64,7 @@
             <hr />
             <footer class="whitefont">
                 <p>&copy; <%: DateTime.Now.Year %> Truckers</p>
-                <p>Выполнил: Сайфуллин Дамир 4307</p>
+                <p>Выполнил: Сайфуллин Дамир</p>
                 <p>Ссылки:</p>
                 <p><a href="https://github.com/Damir-Sayfullin/ASP.NET_Truckers">Этот проект на GitHub</a></p>
                 <p><a href="https://github.com/Damir-Sayfullin">Мой GitHub</a></p>
