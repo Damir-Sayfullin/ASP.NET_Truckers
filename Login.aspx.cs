@@ -63,6 +63,8 @@ namespace ASP.NET_Truckers
                 Session["userPost"] = (string)dataRow["Post"];
                 Session["userName"] = (string)dataRow["Username"];
                 Session["responseLabel"] = "Вы авторизованы как " + ((string)dataRow["Post"]).ToLower() + " " + (string)dataRow["Username"];
+                if (Session["userPost"].ToString() == "Водитель")
+                    Session["responseLabel"] = Session["responseLabel"].ToString() + ". Ваш ID: " + Session["userID"].ToString();
             }
             Server.TransferRequest("Login.aspx");
         }

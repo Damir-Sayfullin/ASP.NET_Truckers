@@ -106,119 +106,91 @@ namespace ASP.NET_Truckers
 
         protected void buttonCurrent_Click(object sender, EventArgs e)
         {
-            Session["ErrorMessage"] = null;
+            DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", Session["userID"].ToString()));
+            if (response.Rows.Count == 1)
+            {
+                foreach (DataRow dataRow in response.Rows)
+                {
+                    Session["cargoID"] = dataRow["ID"].ToString();
+                    Session["cargoDriverID"] = dataRow["DriverID"].ToString();
+                    Session["cargoStatus"] = dataRow["Status"].ToString();
+                    Session["cargoName"] = dataRow["Cargo"].ToString();
+                    Session["cargoWeight"] = dataRow["Weight"].ToString();
+                    Session["cargoFrom"] = dataRow["From"].ToString();
+                    Session["cargoTo"] = dataRow["To"].ToString();
+                    Session["ErrorMessage"] = "УСПЕХ: У вас есть активный груз с ID=" + dataRow["ID"].ToString(); ;
+                }
+            }
+            else
+                Session["ErrorMessage"] = "ОШИБКА: У вас нет активного груза!";
             Server.TransferRequest("Driver.aspx");
         }
 
         protected void buttonAccept_Click(object sender, EventArgs e)
         {
-            if (cargoID.SelectedValue != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
+            // проверка на наличие груза у водителя
+            DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", Session["userID"].ToString()));
+            if (response.Rows.Count == 0)
             {
-                DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", cargoDriverID.Value.ToString()));
-                if (cargoDriverID.Value == "0" || response.Rows.Count == 0 || cargoDriverID.Value == (string)Session["cargoDriverID"])
+                // проверка на наличие водителей у выбранного груза
+                DataTable response2 = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE ID = {0}", cargoID.SelectedValue.ToString()));
+                if (response2.Rows[0]["DriverID"].ToString() == "0")
                 {
-                    SqlResponses.SqlFromDB(string.Format("UPDATE Cargo SET DriverID={1}, Status='{2}', Cargo='{3}', Weight={4}, [From]='{5}', [To]='{6}' WHERE ID={0}",
-                        cargoID.SelectedValue.ToString(), cargoDriverID.Value.ToString(), cargoStatus.Value.ToString(),
-                        cargoName.Value.ToString(), cargoWeight.Value.ToString(), cargoFrom.Value.ToString(), cargoTo.Value.ToString()));
-                    Session["ErrorMessage"] = "УСПЕХ: Данные у груза с ID=" + cargoID.SelectedValue.ToString() + " обновлены";
-
-                    DataTable response2 = SqlResponses.GetSqlFromDB("SELECT * FROM Cargo WHERE ID=" + cargoID.SelectedValue.ToString());
-                    foreach (DataRow dataRow in response2.Rows)
+                    // проверка статуса груза
+                    DataTable response3 = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE ID = {0}", cargoID.SelectedValue.ToString()));
+                    if (response3.Rows[0]["Status"].ToString() == "ready for unloading")
                     {
-                        Session["cargoID"] = cargoID.SelectedValue.ToString();
-                        Session["cargoDriverID"] = dataRow["DriverID"].ToString();
-                        Session["cargoStatus"] = dataRow["Status"].ToString();
-                        Session["cargoName"] = dataRow["Cargo"].ToString();
-                        Session["cargoWeight"] = dataRow["Weight"].ToString();
-                        Session["cargoFrom"] = dataRow["From"].ToString();
-                        Session["cargoTo"] = dataRow["To"].ToString();
+                        SqlResponses.SqlFromDB(string.Format("UPDATE Cargo SET DriverID={0}, Status='on the way' WHERE ID={1}", Session["userID"].ToString(), cargoID.SelectedValue.ToString()));
+                        Session["ErrorMessage"] = string.Format("УСПЕХ: Груз принят! ID={0} Груз: {1} из {2} в {3}", cargoID.SelectedValue.ToString(), response3.Rows[0]["Cargo"].ToString(), response3.Rows[0]["From"].ToString(), response3.Rows[0]["To"].ToString());
                     }
+                    else
+                        Session["ErrorMessage"] = "ОШИБКА: Этот груз уже был доставлен!";
                 }
                 else
-                    Session["ErrorMessage"] = "ОШИБКА: У водителя с ID=" + cargoDriverID.Value.ToString() + " уже есть груз!";
-                Server.TransferRequest("Driver.aspx");
+                    Session["ErrorMessage"] = "ОШИБКА: У этого груза уже есть водитель!";
             }
             else
-            {
-                Session["ErrorMessage"] = "ОШИБКА: Не все поля были заполнены!";
-                Server.TransferRequest("Driver.aspx");
-            }
+                Session["ErrorMessage"] = "ОШИБКА: У вас уже есть активный груз!";
+            Server.TransferRequest("Driver.aspx");
         }
 
         protected void buttonCancel_Click(object sender, EventArgs e)
         {
-            if (cargoID.SelectedValue != "" && cargoDriverID.Value != "" && cargoStatus.Value != "" && cargoName.Value != "" && cargoWeight.Value != "" && cargoFrom.Value != "" && cargoTo.Value != "")
+            DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", Session["userID"].ToString()));
+            if (response.Rows.Count == 1)
             {
-                DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", cargoDriverID.Value.ToString()));
-                if (cargoDriverID.Value == "0" || response.Rows.Count == 0)
-                {
-
-                    SqlResponses.SqlFromDB(string.Format("INSERT INTO Cargo (DriverID, Status, Cargo, Weight, [From], [To]) VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}')",
-                        cargoDriverID.Value, cargoStatus.Value, cargoName.Value, cargoWeight.Value, cargoFrom.Value, cargoTo.Value));
-                    Session["ErrorMessage"] = "УСПЕХ: Груз \"" + cargoName.Value.ToString() + "\" успешно добавлен";
-
-                    Session["cargoID"] = null;
-                    Session["cargoDriverID"] = null;
-                    Session["cargoStatus"] = null;
-                    Session["cargoName"] = null;
-                    Session["cargoWeight"] = null;
-                    Session["cargoFrom"] = null;
-                    Session["cargoTo"] = null;
-                }
-                else
-                    Session["ErrorMessage"] = "ОШИБКА: У водителя с ID=" + cargoDriverID.Value.ToString() + " уже есть груз!";
-                Server.TransferRequest("Driver.aspx");
+                SqlResponses.SqlFromDB(string.Format("UPDATE Cargo SET DriverID=0, Status='ready for unloading' WHERE DriverID={0}", Session["userID"].ToString()));
+                Session["ErrorMessage"] = string.Format("УСПЕХ: Ваш груз c ID={0} отменен!", response.Rows[0]["ID"].ToString());
             }
             else
-            {
-                Session["ErrorMessage"] = "ОШИБКА: Не все поля были заполнены!";
-                Server.TransferRequest("Driver.aspx");
-            }
+                Session["ErrorMessage"] = "ОШИБКА: У вас нет активного груза!";
+            Server.TransferRequest("Driver.aspx");
         }
 
         protected void buttonDelivery_Click(object sender, EventArgs e)
         {
-            if (cargoID.SelectedValue != null)
+            DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE DriverID = {0}", Session["userID"].ToString()));
+            if (response.Rows.Count == 1)
             {
-                DataTable response = SqlResponses.GetSqlFromDB(string.Format("SELECT * FROM Cargo WHERE ID = {0}", cargoID.SelectedValue.ToString()));
-                foreach (DataRow dataRow in response.Rows)
-                {
-                    if (dataRow["DriverID"].ToString() == "0")
-                    {
-                        SqlResponses.SqlFromDB(string.Format("DELETE FROM Cargo WHERE ID = {0}", cargoID.SelectedValue.ToString()));
-                        Session["ErrorMessage"] = "УСПЕХ: Груз с ID=" + cargoID.SelectedValue.ToString() + " успешно удален";
-
-                        Session["cargoID"] = null;
-                        Session["cargoDriverID"] = null;
-                        Session["cargoStatus"] = null;
-                        Session["cargoName"] = null;
-                        Session["cargoWeight"] = null;
-                        Session["cargoFrom"] = null;
-                        Session["cargoTo"] = null;
-                    }
-                    else
-                    {
-                        Session["ErrorMessage"] = "ОШИБКА: Невозможно удалить груз, так как он занят водителем с ID=" + dataRow["DriverID"].ToString() + "!";
-                    }
-                }
-                Server.TransferRequest("Driver.aspx");
+                SqlResponses.SqlFromDB(string.Format("UPDATE Cargo SET DriverID=0, Status='delivered' WHERE DriverID={0}", Session["userID"].ToString()));
+                Session["ErrorMessage"] = string.Format("УСПЕХ: Ваш груз c ID={0} успешно доставлен!", response.Rows[0]["ID"].ToString());
             }
             else
-            {
-                Session["ErrorMessage"] = "ОШИБКА: Не выбран ID!";
-                Server.TransferRequest("Driver.aspx");
-            }
+                Session["ErrorMessage"] = "ОШИБКА: У вас нет активного груза!";
+            Server.TransferRequest("Driver.aspx");
         }
 
         protected void gridshow_Click(object sender, EventArgs e)
         {
             Session["GridVisibility"] = true;
+            Session["ErrorMessage"] = null;
             Server.TransferRequest("Driver.aspx");
         }
 
         protected void gridhide_Click(object sender, EventArgs e)
         {
             Session["GridVisibility"] = false;
+            Session["ErrorMessage"] = null;
             Server.TransferRequest("Driver.aspx");
         }
 
